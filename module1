@@ -1,0 +1,16 @@
+
+
+
+find $WM_PROJECT_DIR -type f | xargs grep -sl ‘noParallel’
+postProcess -func sampleDict -latestTime
+foamLog log.icoFoam 
+-The fact that the initial residuals p are dropping to the same value of the final residuals 
+(monotonic convergence), is a clear indication of a steady behavior
+
+- plot log on the fly 
+  pyFoamPlotRunner.py [options] <foamApplication>
+- plot log files 
+    pyFoamPlotWatcher.py log.icoFoam
+
+- to wite last timestep
+  controlDict >> stopAt writeNow;

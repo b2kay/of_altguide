@@ -12,5 +12,5 @@ foamLog log.icoFoam
 - plot log files 
     pyFoamPlotWatcher.py log.icoFoam
 
-- to wite last timestep
+- to write last timestep
   controlDict >> stopAt writeNow;

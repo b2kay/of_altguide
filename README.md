@@ -122,9 +122,14 @@ This will stop your simulation and will save the current time-step or iteration.
 foamListTimes -rm -processor
 foamCleanTurorials
 
+FYI, solving for the velocity is relatively inexpensive, whereas solving for the pressure is expensive
 
+All the incompressible solvers implemented in OpenFOAM®  (icoFoam, simpleFoam, pisoFoam, and pimpleFoam), use the modified pressure, 
 
-
-
+In OpenFOAM®, most of the solvers are implicit, which means they are unconditionally  stable. In other words, they are not constrained to the CFL number condition.
+• However, the fact that you are using a numerical method that is unconditionally stable, does  not mean that you can choose a time-step of any size.
+• The time-step must be chosen in such a way that it resolves the time-dependent features, and it maintains the solver stability.
+• For the moment and for the sake of simplicity, let us try to keep the CFL number below 5.0 and  preferably close to 1.0 (for good accuracy).
+• Other properties of the numerical method that you should observe are: conservationess, boundedness, transportiveness, and accuracy. We are going to address these properties and the CFL number when we deal with the FVM theory.
 
 

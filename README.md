@@ -81,5 +81,50 @@ en
 ​
 
 
+# WD Intro to OF9
 
-​
+To list all the environment variables related to 
+OpenFOAM®, type in the terminal:
+$> env | grep –i “OpenFOAM”
+
+To list all the aliases related to OpenFOAM®, type in the 
+terminal:
+$> alias | grep -i “FOAM”
+
+find $WM_PROJECT_DIR -type f -name "*.name"
+
+grep -rin "LES" $FOAM_SOLVERS
+
+
+icoFOAM laminar incompressible unstead
+
+'''
+foamLog log.icoFOAM
+gnuplot
+  set logscale y
+  plot [][] "logs/p_0" using 1:2 with lines, plot ....
+  exit
+'''
+
+The fact that the initial residuals are dropping to the same value of the final residuals  (monotonic convergence), is a clear indication of a steady behavior.
+
+
+​pyFoamPlotRunner.py [options] <foamApplication>
+
+pyFoamPlotWatcher.py log.icoFoam
+
+If you want to stop the simulation and save the solution, in the controlDict dictionary made 
+the following modification,
+stopAt writeNow;
+This will stop your simulation and will save the current time-step or iteration.
+
+
+foamListTimes -rm -processor
+foamCleanTurorials
+
+
+
+
+
+
+

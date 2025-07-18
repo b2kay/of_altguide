@@ -133,3 +133,85 @@ In OpenFOAM®, most of the solvers are implicit, which means they are unconditio
 • Other properties of the numerical method that you should observe are: conservationess, boundedness, transportiveness, and accuracy. We are going to address these properties and the CFL number when we deal with the FVM theory.
 
 
+Run the case with Re = 10 and Re = 1000. Feel free to change any variable to achieve the Re value (velocity, 
+viscosity or length). Do you see an unsteady behavior in any of the cases? What about the computing time, 
+what simulation is faster?
+• At larger Re the computation should be slower.
+• Also, the physics becomes strongly unsteady so the use of steady solvers is not recommended.
+• At Re = 10, the simulation might diverge, this is purely numerical.  
+• This result might be very surprising because increasing the viscosity have the effect of stabilizing 
+the solution due to dissipation effects. This is purely numerical and is related to the corrections in 
+the piso loop.
+• The case setup by default will use the momentumCorrector correction.  This correction is 
+recommended for strongly convective flows.  But for low Re flows or creeping flows, this correction 
+may add instabilities (due to poor approximations), so it is better to turn this option off by setting,
+• momentumPredictor off;
+• This correction is recommended for highly convective flows, which is not the case for Re = 10.
+• If you want to keep this option in this case, you will need to increase the number of correctors 
+nCorrector in order to get a stable solution.
+
+Run the tutorial with Re = 100, a mesh with  120 x 120 x 1 cells, and using the default setup (original 
+controlDict, fvSchemes and fvSolution). Did the simulation converge? Did it crash?  Any comments.
+• With the same mesh and time step, the simulation should crash.
+• The simulation crashes because the CFL number becomes larger.
+• In module 6, we are going to see how to add more stability to the solver.
+• Also, the simulation might not crash, but you will realize that it is much much slower or maybe too inaccurate.
+• Usually, by reducing the time-step we stabilize the simulation but a cost of a longer wall clock time.
+• By increasing the number of corrections, you can get more stability
+• You can also reduce the under-relaxation factors. 
+• But be careful, if you use values too low, you can lose time accuracy.
+
+
+Change the base type of the boundary patch movingWall to patch. (the boundary file). Do you get the same 
+results? Can you comment on this?
+• You should get the same results.
+• The main difference between wall and patch is related to turbulence modeling. 
+• With the base type wall, you can use wall functions (turbulence modeling).
+
+Run the simulation using Gauss upwind instead of Gauss linear for the term div(phi,U) (fvSchemes).  Do 
+you get the same quantitative results?
+• No, you should not get the same results.
+• Upwind is first accurate; therefore, is too diffusive.
+• Your final solution should always be at least second order accurate.
+
+nstead of using the boundary condition totalPressure and pressureInletOutletVelocity for the patch top, try 
+use zeroGradient.  Do you get the same results? Any comments?
+(Hint: this combination of boundary conditions might give you an error, if so, read carefully the screen 
+and try to find a fix, you can start by looking at the file fvSolution)
+• The results should be the same.
+• However, you will need to set a reference pressure in the domain.  
+• This is done in the dictionary fvSolution.
+
+Run the simulation in a close domain. Does the volume integral of alpha.water remains the same? Why the 
+value is not constant when the domain is open?
+• In a perfect world, the volume integral should conserve.
+• But due to numerical diffusion, we can lose information.
+• Remember, numerical methods produces certain amount of garbage, and we need to live with that.
+
+Use the utility postprocess to measure the average pressure on the obstacle.                                                    
+(Hint: use the utility postProcess with patchAverage, take a look at module 5)
+• If you do not know how to use the postprocess application, you can jump to module 5 (section 3).
+• You can use postprocess as follows,
+• postProcess -func 'patchAverage(U,patch=outlet)' 
+
+Run a numerical experiment for cAlpha equal to 0, 1, and 2.  Do you see any difference in the solution? What 
+about computing time?
+• The recommend value is 1.
+• If you use 0, the free surface might not be well resolved (too much diffusion).
+• If you use 2, the solution might diverge (too compressible).
+
+ncrease the number of nOuterCorrector to 2 and study the output screen. What difference do you see?
+• By increasing the number of correction, the solution is more accurate and stable.
+• However, at the cost of an increased computational time.
+• You will see on the screen two loops per iteration.
+
+
+Turn off the MULES corrector (MULESCorr). Do you see any difference on the solution or computing time? 
+• If you switch off the MULES corrector and you keep the CFL number above 1, the solution might diverge.
+• With the MULES corrector off, the computing time might be lower.
+• It is strongly recommended to always enable the MULES corrector (switch on).
+
+
+ 
+
+

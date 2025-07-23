@@ -211,6 +211,27 @@ Turn off the MULES corrector (MULESCorr). Do you see any difference on the solut
 • With the MULES corrector off, the computing time might be lower.
 • It is strongly recommended to always enable the MULES corrector (switch on).
 
+Module 3 - Meshing
+
+Mesh quality metrics
+- Orthogonality
+- Skewness
+- Aspect Ratio
+
+- 
+
+SHM
+
+- no more than 4 layers, refine backgrond mesh to improve
+
+-  surfaceFeature convert: convert from vtk to eMesh
+
+-  meshQualityDict
+- maxNonOrtho 75;
+- maxBoundarySkewness 20;
+- maxinternalSkewness 4;
+- 
+
 
  
 
